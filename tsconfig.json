@@ -19,12 +19,17 @@
     "noUnusedParameters": true,
     "allowJs": true,
     "checkJs": true,
+    "paths": {
+      "@type/*": [
+        "./types/*"
+      ]
+    }
   },
   "include": [
     "node_modules/@actions/**/*.js",
-    "node_modules/@types/node-fetch/**/*.js",
+    "node_modules/@types/**/*.js",
     "actions/*.mjs",
-    "global.d.ts",
+    "types/global.d.ts",
     "types/**/*.d.ts",
   ]
 }
