@@ -6,7 +6,6 @@
     "module": "Node16",
     "moduleResolution": "Node16",
     "target": "es2018",
-    "noEmit": true,
     "strict": true,
     "skipLibCheck": false,
     "forceConsistentCasingInFileNames": true,
@@ -14,12 +13,18 @@
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "types",
     "noUnusedParameters": true,
     "allowJs": true,
     "checkJs": true,
   },
   "include": [
+    "node_modules/@actions/**/*.js",
+    "node_modules/@types/node-fetch/**/*.js",
     "actions/*.mjs",
-    "global.d.ts"
+    "global.d.ts",
+    "types/**/*.d.ts",
   ]
 }

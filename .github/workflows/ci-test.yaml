@@ -22,3 +22,12 @@ jobs:
           script: |
             const { default: script } = await import('${{ github.workspace }}/actions/ci-example.mjs');
             return await script({ github, context, core, exec, glob, io, fetch, __original_require__ });
+  ci2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          result-encoding: string
+          script: actions/ci-example.mjs

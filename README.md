@@ -2,6 +2,9 @@
 
 Write github workflows using `@actions/github-script` without headaches.
 
+*You can use this project as a template if your too lazy to do the installation steps manually.*
+
+
 Jump to configuration files:
 - [Typed Github actions](#typed-github-actions)
     - [Installation](#installation)
