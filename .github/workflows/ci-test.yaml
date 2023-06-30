@@ -31,3 +31,12 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           result-encoding: string
           script: actions/ci-example.mjs
+  ci3:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: typed-actions/github-script
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          result-encoding: string
+          script: actions/ci-example.mjs

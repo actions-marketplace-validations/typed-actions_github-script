@@ -29,7 +29,7 @@
     "node_modules/@actions/**/*.js",
     "node_modules/@types/**/*.js",
     "actions/*.mjs",
-    "types/global.d.ts",
+    "types/script.d.ts",
     "types/**/*.d.ts",
   ]
 }

@@ -8,15 +8,54 @@ Write github workflows using `@actions/github-script` without headaches.
 Jump to configuration files:
 - [Typed Github actions](#typed-github-actions)
     - [Installation](#installation)
-      - [Example file structure:](#example-file-structure)
+      - [Configuration ci-workflow.yaml](#configuration-ci-workflowyaml)
       - [Configuration ci-example.mjs](#configuration-ci-examplemjs)
+      - [Example file structure:](#example-file-structure)
+  - [Alternative setup](#alternative-setup)
       - [Configuration package.json](#configuration-packagejson)
       - [Configuration tsconfig.json](#configuration-tsconfigjson)
-      - [Configuration global.d.ts](#configuration-globaldts)
-      - [Configuration ci-workflow.yaml](#configuration-ci-workflowyaml)
+      - [Configuration ci-workflow.yaml](#configuration-ci-workflowyaml-1)
+
+
+
 ### Installation
 ```sh
-$ npm install -D @actions/github @actions/core @actions/exec @actions/glob @actions/io @types/node-fetch
+$ npm install -D @typed-actions/github-script
+```
+
+#### Configuration ci-workflow.yaml
+```yaml
+on: push
+
+permissions:
+  pull-requests: read
+  contents: read
+
+jobs:
+  example:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          
+      - run: npm ci
+      - uses: typed-actions/github-script
+          with:
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+            result-encoding: string
+            script: actions/ci-example.mjs
+```
+
+#### Configuration ci-example.mjs
+```ts
+// @ts-check
+/** @param {import('@typed-actions/github-script').Toolkit} Toolkit */
+export default async ({ core, context }) => {
+  core.debug("Running something at the moment");
+  return context.actor;
+};
 ```
 
 #### Example file structure:
@@ -35,15 +74,11 @@ root # Your repository
 ```
 
 
-#### Configuration ci-example.mjs
-```ts
-// @ts-check
-/** @param {Toolkit} Toolkit */
-export default async ({ core, context }) => {
-  core.debug("Running something at the moment");
-  return context.actor;
-};
-```
+__________________________
+
+
+## Alternative setup
+
 
 #### Configuration package.json
 ```json
@@ -64,24 +99,6 @@ export default async ({ core, context }) => {
     "**/*.mjs",
     "global.d.ts" 
   ]
-}
-```
-
-#### Configuration global.d.ts
-```ts
-export {}
-
-declare global {
-  type Toolkit = {
-    github: InstanceType<typeof import('@actions/github/lib/utils.js').GitHub>
-    context: import('@actions/github/lib/context.js').Context
-    core: typeof import('@actions/core')
-    exec: typeof import('@actions/exec')
-    glob: typeof import('@actions/glob')
-    io: typeof import('@actions/io')
-    fetch: typeof import('node-fetch')
-    __original_require__: NodeRequire
-  }
 }
 ```
 
